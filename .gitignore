@@ -1,0 +1,16 @@
+#keep markdown instructions out
+markdown/instructions
+
+#keep node modules out
+node_modules
+
+#keep environment variables out
+.env
+
+#keep other files out
+images
+front
+docs.md
+
+#keep database out
+prisma/db

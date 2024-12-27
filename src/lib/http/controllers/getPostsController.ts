@@ -1,29 +1,31 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { prisma } from "../../prisma";
-import { PostInfoRepo } from "../../../repositories/PostsRepository";
+import { z } from "zod";
 
 export async function getPosts(request: FastifyRequest, reply: FastifyReply) {
-    const userId = request.user.sub
+    const reqUser = z.object({
+        id:z.string()
+    }).parse(request.user)
+
     const posts = await prisma.post.findMany({
         where:{
-            authorId: userId
+            authorId: reqUser.id
         }
     })
 
-    const postsInfo: PostInfoRepo[] = []
+    const postsInfo: object[] = []
 
-    posts.forEach(async (value, key)=>{
-        let tmp = await prisma.postInfo.findUnique({
+    for(const value of posts){
+        let info = await prisma.postInfo.findUnique({
             where:{
-                id: value.id
+                id: value.infoId,
+                posted: true
             }
-        
         })
-        if(tmp){
-            const info: PostInfoRepo = tmp
-            postsInfo[key] = info
+        if(info){
+            postsInfo.push(info)
         }
-    })
+    }
 
     reply.status(200).send({
         posts: [...postsInfo]

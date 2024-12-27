@@ -13,7 +13,7 @@ export async function defineUserName(request: FastifyRequest, reply: FastifyRepl
             username:z.string()
         }).parse(request.params)
 
-        const u = await prisma.user.update({
+        await prisma.user.update({
             where:{
                 id: reqUser.id
             },

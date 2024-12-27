@@ -14,17 +14,17 @@ export async function createPost(request: FastifyRequest, reply: FastifyReply){
 
     try {
 
-        const {status} = z.object({
-            status:z.enum(["yes","no"])
+        const {posted} = z.object({
+            posted:z.string()
         }).parse(request.params)
 
-        const posted = (status == "yes" ? true : false)
+        const status = (posted == "yes" ? true : false)
 
         const postInfo = await prisma.postInfo.create({
             data:{
                 title,
                 textContent,
-                posted
+                posted: status
             }
         })
 
@@ -33,10 +33,8 @@ export async function createPost(request: FastifyRequest, reply: FastifyReply){
                 authorId: user.id,
                 infoId: postInfo.id
             }
+            
         })
-
-        console.log(post)
-        console.log(postInfo)
 
         reply.status(201).send()
 

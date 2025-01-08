@@ -1,9 +1,9 @@
 import { app } from "./app";
-import { HOST, PORT } from "./lib/env";
+import { env } from "./lib/env";
 
 app.listen({
-    port:Number(PORT),
-    host:HOST
+    port:Number(env.PORT),
+    host:env.HOST
 },(err, path)=>{
-    console.log(err || path)
+    console.log(err || `The Api is Running on ${path}`)
 })

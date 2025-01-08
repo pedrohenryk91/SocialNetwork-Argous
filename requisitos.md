@@ -7,20 +7,20 @@ Desenvolva e contrua uma rede social semelhante a platforma X (antigo twitter). 
 ### Autenticação e Autorização
 
 - [ ] Permitir registro de usuários com validação de e-mail.
-- [ ] Autenticação via login e senha com suporte a tokens de acesso (JWT).
+- [x] Autenticação via login e senha com suporte a tokens de acesso (JWT).
 - [ ] Suporte a autenticação por terceiros (OAuth 2.0, como Google, Facebook, etc.).
 - [ ] Gerenciamento de sessões ativas e logout seguro.
 
 ### Gerenciamento de Usuários
 
-- [ ] CRUD (Criar, Ler, Atualizar, Deletar) de perfis de usuários.
+- [x] CRUD (Criar, Ler, Atualizar, Deletar) de perfis de usuários.
 - [ ] Upload de avatar e gerenciamento de imagens de perfil.
 - [ ] Exibir e editar informações básicas do perfil (nome, bio, localização, etc.).
 - [ ] Funcionalidade para seguir e deixar de seguir outros usuários.
 
 ### Postagens
 
-- [ ] Criar postagens de texto com limite de caracteres (e.g., 280 caracteres).
+- [x] Criar postagens de texto com limite de caracteres (e.g., 280 caracteres).
 - [ ] Suporte a anexos em postagens (imagens, vídeos, links).
 - [ ] Sistema de curtidas em postagens.
 - [ ] Sistema de repostagens (similar a "retweets").

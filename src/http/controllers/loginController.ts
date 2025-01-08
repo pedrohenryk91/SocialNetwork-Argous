@@ -1,7 +1,7 @@
 import { FastifyReply, FastifyRequest } from "fastify";
+import { comparePassword } from "@/utils/tools";
+import { prisma } from "@/lib/prisma";
 import { z } from "zod";
-import { prisma } from "../../prisma";
-import { comparePassword } from "../../tools";
 
 export async function login(request: FastifyRequest, reply: FastifyReply){
     const {email, password} = z.object({
@@ -29,7 +29,7 @@ export async function login(request: FastifyRequest, reply: FastifyReply){
         reply.status(202).send({ token })
     }
     else{
-        reply.send(401).send({
+        reply.status(401).send({
             Description:"Invalid Password"
         })
     }

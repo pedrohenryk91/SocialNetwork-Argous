@@ -11,6 +11,16 @@ export class PrismaProfilesRepository implements ProfilesRepository {
         return profile
     }
 
+    async findById(id: string) {
+        const profile = await prisma.userProfile.findUnique({
+            where:{
+                id,
+            }
+        })
+
+        return profile
+    }
+
     async findByUserId(id: string): Promise<UserProfile | null> {
         const user = await prisma.user.findUnique({
             where:{
@@ -28,5 +38,17 @@ export class PrismaProfilesRepository implements ProfilesRepository {
         })
 
         return profile
+    }
+
+    async findManyByUsername(username: string, take?: number) {
+        return await prisma.userProfile.findMany({
+            take,
+            where:{
+                OR: [
+                    {username: {equals: username}},
+                    {username: {contains: username}},
+                ],
+            }
+        })
     }
 }

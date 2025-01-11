@@ -2,5 +2,7 @@ import { Prisma, UserProfile } from "@prisma/client";
 
 export interface ProfilesRepository {
     create(data: Prisma.UserProfileCreateInput): Promise<UserProfile>
-    findByUserId(id: string): Promise<UserProfile | null>
+    findById(id: string): Promise<UserProfile | null>
+    findByUserId(userId: string): Promise<UserProfile | null>
+    findManyByUsername(username: string, take?: number): Promise<UserProfile[] | null>
 }

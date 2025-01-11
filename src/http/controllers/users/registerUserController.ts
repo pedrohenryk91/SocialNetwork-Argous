@@ -8,12 +8,14 @@ import { z } from "zod";
 export async function registerUser(request: FastifyRequest, reply: FastifyReply){
     try {
         const registerUserSchema = z.object({
-            email:     z.string().email({message:"Invalid Email"}).toLowerCase(),
-            password:  z.string().min(6),
-            birthday:  z.string().transform((str) => new Date(str)).pipe(z.date())
+            email:    z.string().email({message:"Invalid Email"}).toLowerCase(),
+            password: z.string().min(6,"Password must have at least 6 digits"),
+            birthday: z.string().transform((str) => new Date(str)).pipe(z.date()),
+            username: z.string().min(4,"Username must have at least 4 digits")
+                                .max(20,"Username cannot have more than 20 digits").toLowerCase(),
         })
 
-        const {email, password, birthday} = registerUserSchema.parse(request.body)
+        const {email, password, birthday, username} = registerUserSchema.parse(request.body)
 
         const prismaUsersRepository = new PrismaUsersRepository()
         const registerUserService = new RegisterUserService(prismaUsersRepository)
@@ -21,7 +23,8 @@ export async function registerUser(request: FastifyRequest, reply: FastifyReply)
         await registerUserService.execute({
             email,
             password,
-            birthday
+            birthday,
+            username,
         })
 
         reply.status(201).send()

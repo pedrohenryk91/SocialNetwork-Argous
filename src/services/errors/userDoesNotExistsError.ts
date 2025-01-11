@@ -1,5 +1,6 @@
 export class UserDoesNotExistsError extends Error {
-    constructor(){
-        super("The user does not exists")
+    constructor(message?: string){
+        if(!message) super("The user does not exists")
+        else super(message)
     }
 }

@@ -23,9 +23,22 @@ model UserProfile {
   username    String?
   description String?
   birthday    DateTime
+  following   Follow[] @relation("UsersFollowed") //Eu sigo
+  followers   Follow[] @relation("UserFollowers") //Me seguem
   user        User?
 
   @@map("profiles")
+}
+
+model Follow {
+  followerId String
+  followedId String
+
+  followed UserProfile @relation("UserFollowers",fields: [followedId], references: [id]) //Seguidos
+  follower UserProfile @relation("UsersFollowed",fields: [followerId], references: [id]) //Seguem
+
+  @@id([followerId, followedId])
+  @@map("follows")
 }
 
 model Post {
@@ -41,7 +54,7 @@ model Post {
 model PostContent {
   id          String    @id @default(uuid())
   title       String    @db.VarChar(200)
-  textContent String?   @db.VarChar(1000)
+  textContent String?   @db.Text
   createdAt   DateTime  @default(now())
   updatedAt   DateTime?
   postedAt    DateTime?

@@ -6,7 +6,8 @@ import { User } from "@prisma/client"
 interface RegisterUserRequest {
     email: string,
     password: string,
-    birthday: Date
+    birthday: Date,
+    username: string,
 }
 
 interface RegisterUserResponse {
@@ -18,7 +19,8 @@ export class RegisterUserService {
     async execute({
         email,
         password,
-        birthday
+        birthday,
+        username,
     }: RegisterUserRequest): Promise<RegisterUserResponse> {
         const emailAlreadyInUse = await this.userRepository.findByEmail(email)
     
@@ -33,7 +35,8 @@ export class RegisterUserService {
             password: hashedPassword,
             profile:{
                 create:{
-                    birthday
+                    birthday,
+                    username,
                 }
             }
         })
